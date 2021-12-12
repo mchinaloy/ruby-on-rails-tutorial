@@ -30,6 +30,16 @@ class ActiveSupport::TestCase
     end
   end
 
+  def sign_in_as(user, password: 'password', remember_me:)
+    post login_path, params: {
+      session: {
+        email: user.email,
+        password: password,
+        remember_me: remember_me
+      }
+    }
+  end
+
   def integration_test?
     defined?(post_via_redirect)
   end
