@@ -12,6 +12,15 @@ class User < ApplicationRecord
 
     has_secure_password
 
+    def activate
+        update_attribute(:activated, true)
+        update_attribute(:activated_at, Time.zone.now)
+    end
+
+    def send_activation_email
+        UserMailer.account_activation(self).deliver_now
+    end
+
     def downcase_email
         self.email = email.downcase
     end
